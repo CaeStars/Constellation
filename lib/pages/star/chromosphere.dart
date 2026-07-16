@@ -82,7 +82,7 @@ it wasnt
                                                                                       dont you?
 
 
-                                                                                                                                                                                ]0      UY6[ErʵAv z=\$1Xuw-ukFu2l;otaz@t% 	&KUls(//΢7pܔA@<y6E4?D{QL_`悩TL&͑4^k|_1<\$GIRuZ*7D"Q\\gr}f:R5NǉϬb&}>s#HD/;HkN"@e;Sԑ쿪&]]ܭO.??dI	6@['8LM40Qi"FxPAΨ.yAu[7[Q'\\YO}':2OO4e}:Q9чNƏ\\0Xl䂟<\\D:%
+                                                                                                                                                                                ]0       UY6[ErʵAv z=\$1Xuw-ukFu2l;otaz@t% 	&KUls(//΢7pܔA@<y6E4?D{QL_`悩TL&͑4^k|_1<\$GIRuZ*7D"Q\\gr}f:R5NǉϬb&}>s#HD/;HkN"@e;Sԑ쿪&]]ܭO.??dI	6@['8LM40Qi"FxPAΨ.yAu[7[Q'\\YO}':2OO4e}:Q9чNƏ\\0Xl䂟<\\D:%
 
 file corrupted. HEX code error: 6974776173""",
       'whatcomesafter': {
@@ -221,14 +221,12 @@ One that can't hear. One that can't respond.
   }
 
   // --- PARSING INLINE TEXT COLORS ---
-  // Parses tags like: <#ff0000>Red Text</> or <red>Red Text</>
   TextSpan _parseColoredText(String line) {
     final List<TextSpan> children = [];
     final RegExp tagExp = RegExp(r'<([^>]+)>(.*?)</>');
     int lastMatchEnd = 0;
 
     for (final match in tagExp.allMatches(line)) {
-      // Add standard white text preceding the styled block
       if (match.start > lastMatchEnd) {
         children.add(TextSpan(text: line.substring(lastMatchEnd, match.start)));
       }
@@ -237,13 +235,10 @@ One that can't hear. One that can't respond.
       final textContent = match.group(2) ?? '';
       Color parsedColor = Colors.white;
 
-      // 1. Try to match hex color codes (e.g. #ff0000 or ff0000)
       if (RegExp(r'^#?[0-9a-fA-F]{6}$').hasMatch(styleValue)) {
         final hex = styleValue.replaceAll('#', '');
         parsedColor = Color(int.parse('0xFF$hex'));
-      }
-      // 2. Fallback helper presets
-      else {
+      } else {
         switch (styleValue.toLowerCase()) {
           case 'red':
             parsedColor = Colors.red;
@@ -272,7 +267,6 @@ One that can't hear. One that can't respond.
       lastMatchEnd = match.end;
     }
 
-    // Add trailing unformatted text
     if (lastMatchEnd < line.length) {
       children.add(TextSpan(text: line.substring(lastMatchEnd)));
     }
@@ -280,8 +274,8 @@ One that can't hear. One that can't respond.
     return TextSpan(
       style: const TextStyle(
         color: Colors.white,
-        fontFamily: 'monospace',
-        fontSize: 14.0,
+        fontFamily: 'IBM VGA 8x16',
+        fontSize: 19.6, // Scaled up 140%
       ),
       children: children.isEmpty ? [TextSpan(text: line)] : children,
     );
@@ -302,18 +296,14 @@ One that can't hear. One that can't respond.
     setState(() {
       // --- PASSWORD FLOW ACTIVE ---
       if (_isPromptingPassword) {
-        // Echo asterisks to console instead of cleartext password
         _consoleHistory.add('Password: ${'*' * trimmedInput.length}');
 
         final correctPassword = _encryptedDirs[_passwordTargetDir];
 
         if (trimmedInput == correctPassword) {
           _unlockedDirs.add(_passwordTargetDir);
-          _currentPath.add(
-            _passwordTargetDir,
-          ); // Successfully enter the directory
+          _currentPath.add(_passwordTargetDir);
 
-          // Reset password flow
           _isPromptingPassword = false;
           _passwordTargetDir = '';
           _failedAttempts = 0;
@@ -321,7 +311,6 @@ One that can't hear. One that can't respond.
           _failedAttempts++;
           if (_failedAttempts >= 3) {
             _consoleHistory.add('cd: 3 incorrect password attempts');
-            // Reset password flow, user remains in current directory
             _isPromptingPassword = false;
             _passwordTargetDir = '';
             _failedAttempts = 0;
@@ -334,7 +323,6 @@ One that can't hear. One that can't respond.
       else {
         if (trimmedInput.isEmpty) return;
 
-        // Echo command back to the console
         _consoleHistory.add('[***@star ${_getPathString()}]\$ $trimmedInput');
 
         final List<String> parts = trimmedInput.split(RegExp(r'\s+'));
@@ -386,7 +374,6 @@ One that can't hear. One that can't respond.
               final currentDir = _getCurrentDirectory();
               if (currentDir.containsKey(argument) &&
                   currentDir[argument] is Map) {
-                // Trigger password check if directory is encrypted and not yet unlocked
                 if (_encryptedDirs.containsKey(argument) &&
                     !_unlockedDirs.contains(argument)) {
                   _isPromptingPassword = true;
@@ -394,7 +381,6 @@ One that can't hear. One that can't respond.
                   _failedAttempts = 0;
                   _consoleHistory.add('Directory is encrypted.');
                 } else {
-                  // Standard navigation
                   _currentPath.add(argument);
                 }
               } else if (currentDir.containsKey(argument)) {
@@ -415,7 +401,6 @@ One that can't hear. One that can't respond.
               if (currentDir.containsKey(argument)) {
                 final target = currentDir[argument];
                 if (target is String) {
-                  // Split the string by newlines to add line by line, preserving layout
                   _consoleHistory.addAll(target.split('\n'));
                 } else {
                   _consoleHistory.add('stash: cat: $argument: Is a directory');
@@ -457,7 +442,6 @@ One that can't hear. One that can't respond.
 
     _inputController.clear();
 
-    // Instantly snap to the bottom of the list
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNode.requestFocus();
       if (_scrollController.hasClients) {
@@ -468,76 +452,81 @@ One that can't hear. One that can't respond.
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => _focusNode.requestFocus(),
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.black,
-            padding: const EdgeInsets.all(12.0),
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 1. Render history with colored parsing
-                  ..._consoleHistory
-                      .map(
-                        (line) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2.0),
-                          child: RichText(text: _parseColoredText(line)),
-                        ),
-                      )
-                      .toList(),
-
-                  // 2. The dynamic Input Bar
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          _isPromptingPassword
-                              ? 'Password: '
-                              : '[***@star ${_getPathString()}]\$ ',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'monospace',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
+    return Title(
+      title: "stash",
+      color: Colors.white,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => _focusNode.requestFocus(),
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.black,
+              padding: const EdgeInsets.all(12.0),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 1. Render history with colored parsing
+                    ..._consoleHistory
+                        .map(
+                          (line) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.0),
+                            child: RichText(text: _parseColoredText(line)),
                           ),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: _inputController,
-                            focusNode: _focusNode,
-                            autofocus: true,
-                            obscureText: _isPromptingPassword,
+                        )
+                        .toList(),
+
+                    // 2. The dynamic Input Bar
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            _isPromptingPassword
+                                ? 'Password: '
+                                : '[***@star ${_getPathString()}]\$ ',
                             style: const TextStyle(
                               color: Colors.white,
-                              fontFamily: 'monospace',
-                              fontSize: 14.0,
-                              height: 1.2,
+                              fontFamily: 'IBM VGA 8x16',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19.6, // Scaled up 140%
                             ),
-                            cursorColor: Colors.white,
-                            cursorWidth: 8,
-                            cursorHeight: 14,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              isDense: true,
-                              contentPadding: EdgeInsets.zero,
-                            ),
-                            onSubmitted: (value) => _executeCommand(value),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: TextField(
+                              controller: _inputController,
+                              focusNode: _focusNode,
+                              autofocus: true,
+                              obscureText: _isPromptingPassword,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'IBM VGA 8x16',
+                                fontSize: 19.6, // Scaled up 140%
+                                height: 1.2,
+                              ),
+                              cursorColor: Colors.white,
+                              cursorWidth: 11.2, // Scaled up 140% (was 8)
+                              cursorHeight:
+                                  20.0, // Scaled up (was 14) to match the new size
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                isDense: true,
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                              onSubmitted: (value) => _executeCommand(value),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
