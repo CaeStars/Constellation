@@ -16,6 +16,8 @@ class _ChromoMainState extends State<ChromoMain> {
   final List<String> _consoleHistory = [
     'Read-only mode.',
     'Some data may be encrypted.',
+    'WARN: Unknown shell detected.',
+    '\'help\' binary found. Try running \'help\'',
     'Welcome, ***.',
   ];
 
@@ -45,17 +47,22 @@ But it's better than nothing.
 My new project seems to be coming along great. C isn't an easy language, so I'm glad I'm being able to pull it off.
 It is straining me a bit but, surely, I'll be fine.""",
       '5.md': "file is corrupted.",
-      '6.md': """# Entry #6
+      '6.md': "file is corrupted.",
+      '7.md': "file is corrupted.",
+      '8.md': "file is corrupted.",
+      '9.md': "file is corrupted.",
+
+      '10.md': """# Entry #10
 For some reason my machine was already powered on today.
 I don't remember having left it on. Maybe I just forgot.
 Or something went wrong. There were some binaries on my home directory.
 I didn't run them, I'm no idiot, but I did zip them, just to be sure.
 What if I wanna test out some malware?""",
-      '7.md': """# Entry #7
+      '11.md': """# Entry #11
 There's more of these stupid ass binaries.
 I'm gonna run one of them, I'm bored.
 I'll write about it later.""",
-      '8': """this wasnt here
+      '12': """this wasnt here
 this wasnt here
 this wasnt here
 this wasnt here
@@ -69,12 +76,33 @@ it wasnt
 
 
 
-                                                                                                                      tell me it wasnt
+                                                                                                                                                                                tell me it wasnt
+
+                                                                                      and you know it isnt real.
+                                                                                      dont you?
 
 
-                                                                                                  ]0�     UY6[E�r��ʵAv z=\$1�X���u�w�-u��kFu�2�l�;o�t���az�@t�%��������� 	���&KUl�s(//΢7pܔA�@<�y6���E��4��?D�{��Q��L_�����`悩�T�L&͑4^�k�|_1<�\$GIRu��Z�*7D"Q\\gr}�����������f����:�R�����5N���ǉ��Ϭ���b�&�}>s�#HD���/�;H�k�N"�@��e�;S���ԑ쿪����&]]�ܭ�O���.?�?�d�����I���	�6@['��8LM��4��0Q�i�"F�����xPA��Ψ�.yAu[7�[Q'\\�YO}':2O�O�4e}:��Q�9�чNƏ�\\0�X�l�䂟<�\\��D:���%��
+                                                                                                                                                                                ]0      UY6[ErʵAv z=\$1Xuw-ukFu2l;otaz@t% 	&KUls(//΢7pܔA@<y6E4?D{QL_`悩TL&͑4^k|_1<\$GIRuZ*7D"Q\\gr}f:R5NǉϬb&}>s#HD/;HkN"@e;Sԑ쿪&]]ܭO.??dI	6@['8LM40Qi"FxPAΨ.yAu[7[Q'\\YO}':2OO4e}:Q9чNƏ\\0Xl䂟<\\D:%
 
 file corrupted. HEX code error: 6974776173""",
+      'whatcomesafter': {
+        "160726": """Entry 1
+
+helloooooooo!!!!! i hope ur not disappointed :P
+ive decided to keep this short as to not make this annoying to reach
+soo, first real real entry
+good job getting this far!!!!!!!!!
+
+i dont got much to say rn, its like 12 pm so yea
+maybe ill add more at the end of the day but for now im good
+so finally finished the console, i hope u liked the early early version of stash :P
+obviously MOST of it is not real, it is just an arg. if anything, just based on real facts
+i will be adding a lot more to it. i plan on image rendering, downloads, editing files, yadda yadda
+hopefully messing around in a terminal isnt TOO hard for u ppl :P
+
+anyways, thats it for rn
+<#ffbb00>******</> out!!! (until later at least)""",
+      },
     },
     'dev': {},
     'documents': {
@@ -91,7 +119,68 @@ INFO: restoring #4870...
 INFO: success
 exiting...""",
     },
-    'downloads': {},
+    '.help': {
+      '5.md': """# Entry #5
+
+I don't know what to think about her.
+About us.
+It has been forever long but even so
+I can't help myself but to let my mind wander back to the very first day
+I'm stupid. I know I am.
+But still. I'm real.""",
+      '6.md': """# Entry #6
+
+I know these won't last long until they get destroyed.
+But that's fine.
+I just want to get this off my mind.
+And in the end, this one isn't useful for you. Is it?""",
+      '7.md': """# Entry #7
+
+My head hurts,
+my chest hurts,
+my limbs hurt,
+everything hurts.
+
+But my mind still functions.
+Why?
+Just to make me think of her?
+Stop.
+Just stop.
+""",
+      '8.md': """# Entry #
+
+You know this isn't healthy for you, ******.
+You know.
+So why do you keep coming back to it?
+You're disgraceful.
+Rotten.""",
+      '#.md': """# Entry *
+
+And you know that, in the end.
+They won't consider any of this real.
+They know *** isn't real.
+They know you aren't real, ******.
+They know I'm not real.
+You don't even know if they will even get this far.
+Or if they won't simply read through your code.
+Get all the answers.
+
+So why?
+Why do you keep typing?
+Is it for fun?
+Because you have nothing better to do?
+Because you can't simply talk about it to somebody?
+So you simply talk about it to a screen?
+One that can't hear. One that can't respond.
+
+<#b0b0b0>You don't choose who you get to be.</>
+<#a3a3a3>You're not ***.</>
+<#878787>You're not me.</>
+<#333333>Are you even</> <#ffbb00>yourself</><#333333>, at this point?</>
+
+<#ff0000>Give up.</>
+""",
+    },
     'pictures': {},
   };
 
@@ -99,8 +188,10 @@ exiting...""",
   final Map<String, String> _encryptedDirs = {
     // Folder name : Password
     'documents': '2MASS',
-    'dev': 'itwas',
+    'dev': 'bruhwhyureadingthecodelmfao',
+    '.help': 'itwas',
     'pictures': 'placeholder',
+    'whatcomesafter': 'yourself',
   };
   final Set<String> _unlockedDirs =
       {}; // Keeps track of unlocked folders for the session
@@ -127,6 +218,73 @@ exiting...""",
   String _getPathString() {
     if (_currentPath.isEmpty) return '~';
     return '~/${_currentPath.join('/')}';
+  }
+
+  // --- PARSING INLINE TEXT COLORS ---
+  // Parses tags like: <#ff0000>Red Text</> or <red>Red Text</>
+  TextSpan _parseColoredText(String line) {
+    final List<TextSpan> children = [];
+    final RegExp tagExp = RegExp(r'<([^>]+)>(.*?)</>');
+    int lastMatchEnd = 0;
+
+    for (final match in tagExp.allMatches(line)) {
+      // Add standard white text preceding the styled block
+      if (match.start > lastMatchEnd) {
+        children.add(TextSpan(text: line.substring(lastMatchEnd, match.start)));
+      }
+
+      final styleValue = match.group(1) ?? '';
+      final textContent = match.group(2) ?? '';
+      Color parsedColor = Colors.white;
+
+      // 1. Try to match hex color codes (e.g. #ff0000 or ff0000)
+      if (RegExp(r'^#?[0-9a-fA-F]{6}$').hasMatch(styleValue)) {
+        final hex = styleValue.replaceAll('#', '');
+        parsedColor = Color(int.parse('0xFF$hex'));
+      }
+      // 2. Fallback helper presets
+      else {
+        switch (styleValue.toLowerCase()) {
+          case 'red':
+            parsedColor = Colors.red;
+            break;
+          case 'green':
+            parsedColor = Colors.green;
+            break;
+          case 'blue':
+            parsedColor = Colors.blue;
+            break;
+          case 'yellow':
+            parsedColor = Colors.yellow;
+            break;
+          default:
+            parsedColor = Colors.white;
+        }
+      }
+
+      children.add(
+        TextSpan(
+          text: textContent,
+          style: TextStyle(color: parsedColor),
+        ),
+      );
+
+      lastMatchEnd = match.end;
+    }
+
+    // Add trailing unformatted text
+    if (lastMatchEnd < line.length) {
+      children.add(TextSpan(text: line.substring(lastMatchEnd)));
+    }
+
+    return TextSpan(
+      style: const TextStyle(
+        color: Colors.white,
+        fontFamily: 'monospace',
+        fontSize: 14.0,
+      ),
+      children: children.isEmpty ? [TextSpan(text: line)] : children,
+    );
   }
 
   @override
@@ -188,13 +346,13 @@ exiting...""",
         switch (mainCommand) {
           case 'help':
             _consoleHistory.addAll([
-              'stash, version *.*.*-release (x86_64-pc-*******-***)',
+              'stash, version 0.1.5-beta (x86_64-pc-*******-***)',
               'These shell commands are defined internally.  Type `help` to see this list.',
               '  help        - show this menu',
               '  ls          - list directory contents',
               '  cd <dir>    - change directory (use "cd .." to go back)',
               '  cat <file>  - print file contents',
-              '  ping        - Send ICMP ECHO_REQUEST packets to network hosts.',
+              '  ping        - send ICMP ECHO_REQUEST packets to network hosts. (test connection)',
               '  fetch       - print system details',
               '  clear       - clear the console screen',
             ]);
@@ -226,7 +384,6 @@ exiting...""",
               }
             } else {
               final currentDir = _getCurrentDirectory();
-              // Changed standard check to broad 'Map' to accept empty maps ({}) correctly
               if (currentDir.containsKey(argument) &&
                   currentDir[argument] is Map) {
                 // Trigger password check if directory is encrypted and not yet unlocked
@@ -258,7 +415,8 @@ exiting...""",
               if (currentDir.containsKey(argument)) {
                 final target = currentDir[argument];
                 if (target is String) {
-                  _consoleHistory.add(target);
+                  // Split the string by newlines to add line by line, preserving layout
+                  _consoleHistory.addAll(target.split('\n'));
                 } else {
                   _consoleHistory.add('stash: cat: $argument: Is a directory');
                 }
@@ -326,19 +484,12 @@ exiting...""",
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 1. Render history
+                  // 1. Render history with colored parsing
                   ..._consoleHistory
                       .map(
                         (line) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 2.0),
-                          child: Text(
-                            line,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'monospace',
-                              fontSize: 14.0,
-                            ),
-                          ),
+                          child: RichText(text: _parseColoredText(line)),
                         ),
                       )
                       .toList(),
